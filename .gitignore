@@ -2,6 +2,5 @@
 target/
 lib_managed/
 boot/
-src_managed/
 .idea/
 .idea_modules/
