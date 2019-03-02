@@ -5,6 +5,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object Main extends App {
   val openNode = new OpenNode(sys.env("mathbot_payments_openNode_apiKey"))
+  /*
   openNode.generateCharge(amount = 1,
                           description = "testing lib",
                           customerEmail = "1@1.com",
@@ -13,4 +14,5 @@ object Main extends App {
     case Left(chargeResponseData) => println(Json.toJson(chargeResponseData))
     case Right(openNodeError) => println(Json.toJson(openNodeError))
   }
+ */
 }

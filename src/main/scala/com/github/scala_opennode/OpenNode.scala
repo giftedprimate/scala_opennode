@@ -24,7 +24,7 @@ class OpenNode(apiKey: String,
   system.registerOnTermination {
     System.exit(0)
   }
-  implicit val materializer = ActorMaterializer()
+  implicit val materializer: ActorMaterializer = ActorMaterializer()
 
   val http = StandaloneAhcWSClient()
 

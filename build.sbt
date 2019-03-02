@@ -28,12 +28,18 @@ publishTo := Some(
     Opts.resolver.sonatypeStaging
 )
 
-val playStuffVersion = "2.0.1"
+lazy val playStuffVersion = "2.0.1"
+lazy val akkaHttpVersion = "10.1.1"
+lazy val akkaVersion = "2.5.11"
+lazy val mongoDriverVersion = "2.4.2"
+lazy val scalaTestVersion = "4.0.0"
 
 libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-ahc-ws-standalone"  % playStuffVersion,
   "com.typesafe.play" %% "play-ws-standalone-json" % playStuffVersion,
   "org.apache.logging.log4j" %% "log4j-api-scala" % "11.0",
   "org.apache.logging.log4j" % "log4j-api" % "2.11.0",
-  "org.apache.logging.log4j" % "log4j-core" % "2.11.0" % Runtime
+  "org.apache.logging.log4j" % "log4j-core" % "2.11.0" % Runtime,
+  "org.mongodb.scala"      %% "mongo-scala-driver" % mongoDriverVersion,
+  "org.scalatestplus.play" %% "scalatestplus-play" % scalaTestVersion % "test"
 )
