@@ -18,9 +18,9 @@ case class ChargeRequest(
     description: String,
     amount: Long,
     order_id: String,
-    customer_email: String = "not@used.com",
-    customer_name: String = "nonameatthistime",
-    callback_url: Option[String] = None,
-    success_url: Option[String] = None,
-    auto_settle: Boolean = false
+    customer_email: String,
+    customer_name: String,
+    callback_url: Option[String],
+    success_url: Option[String],
+    auto_settle: Boolean
 )

@@ -44,7 +44,10 @@ class OpenNode(apiKey: String,
    */
   def generateCharge(orderId: String = UUID.randomUUID().toString,
                      amount: Long,
-                     description: String): Future[Either[ChargeResponseData, OpenNodeError]] = {
+                     description: String,
+                     customerEmail: String,
+                     customerName: String,
+                     autoSettle: Boolean): Future[Either[ChargeResponseData, OpenNodeError]] = {
     val body =
       ChargeRequest(
         description = description,
@@ -52,6 +55,9 @@ class OpenNode(apiKey: String,
         order_id = orderId,
         success_url = successUrl,
         callback_url = callbackUrl.map(cb => s"$cb/$orderId"),
+        customer_email = customerEmail,
+        customer_name = customerName,
+        auto_settle = autoSettle
       )
     for {
       response <- http
