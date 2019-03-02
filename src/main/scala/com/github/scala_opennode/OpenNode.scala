@@ -7,10 +7,11 @@ import akka.stream.ActorMaterializer
 import entities._
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.ahc._
+import play.api.libs.ws.JsonBodyReadables._
+import play.api.libs.ws.JsonBodyWritables._
 
 import scala.concurrent.Future
 import org.apache.logging.log4j.scala.Logging
-import org.apache.logging.log4j.Level
 
 class OpenNode(apiKey: String,
                successUrl: Option[String] = None,
