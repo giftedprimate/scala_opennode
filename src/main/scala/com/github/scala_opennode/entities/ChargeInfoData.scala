@@ -1,6 +1,5 @@
 package com.github.scala_opennode.entities
 
-import entities.{ChainInvoice, LightningInvoice}
 import play.api.libs.json.{Json, OFormat}
 
 object ChargeInfoData {

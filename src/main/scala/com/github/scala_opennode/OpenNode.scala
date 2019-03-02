@@ -4,14 +4,14 @@ import java.util.UUID
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
-import entities._
+import com.github.scala_opennode.entities._
+import org.apache.logging.log4j.scala.Logging
 import play.api.libs.json.{JsValue, Json}
-import play.api.libs.ws.ahc._
-import play.api.libs.ws.JsonBodyReadables._
 import play.api.libs.ws.JsonBodyWritables._
+import play.api.libs.ws.ahc._
 
 import scala.concurrent.Future
-import org.apache.logging.log4j.scala.Logging
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class OpenNode(apiKey: String,
                successUrl: Option[String] = None,
@@ -20,6 +20,7 @@ class OpenNode(apiKey: String,
     extends Logging {
   // Create Akka system for thread and streaming management
   implicit val system: ActorSystem = ActorSystem()
+
   system.registerOnTermination {
     System.exit(0)
   }
