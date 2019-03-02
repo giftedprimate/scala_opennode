@@ -27,3 +27,13 @@ publishTo := Some(
   else
     Opts.resolver.sonatypeStaging
 )
+
+val playStuffVersion = "2.0.1"
+
+libraryDependencies ++= Seq(
+  "com.typesafe.play" %% "play-ahc-ws-standalone"  % playStuffVersion,
+  "com.typesafe.play" %% "play-ws-standalone-json" % playStuffVersion,
+  "org.apache.logging.log4j" %% "log4j-api-scala" % "11.0",
+  "org.apache.logging.log4j" % "log4j-api" % "2.11.0",
+  "org.apache.logging.log4j" % "log4j-core" % "2.11.0" % Runtime
+)
