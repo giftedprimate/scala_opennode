@@ -14,5 +14,9 @@ object Main extends App {
     case Left(chargeResponseData) => println(Json.toJson(chargeResponseData))
     case Right(openNodeError) => println(Json.toJson(openNodeError))
   }
+  openNode.availableCurrencies() map {
+    case Left(currentExchangeRatesData) => println(currentExchangeRatesData)
+    case Right(openNodeError) => println(openNodeError)
+  }
  */
 }

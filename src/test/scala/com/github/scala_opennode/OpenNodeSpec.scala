@@ -120,4 +120,24 @@ class OpenNodeSpec extends AsyncFlatSpec with Logging {
       withdrawalInfoData <- openNode.withdrawalInfo(withdrawalId.get)
     } yield assert(withdrawalInfoData.isLeft && withdrawalInfoData.left.get.isInstanceOf[WithdrawalInfoData])
   }
+
+  behavior of "currentExchangeRates"
+  it should "respond with CurrentExchangeRatesData" in {
+    for {
+      currentExchangeRatesData <- openNode.currentExchangeRates()
+    } yield
+      assert(
+        currentExchangeRatesData.isLeft && currentExchangeRatesData.left.get.isInstanceOf[CurrentExchangeRatesData]
+      )
+  }
+
+  behavior of "availableCurrencies"
+  it should "respond with AvailableCurrenciesData" in {
+    for {
+      availableCurrenciesData <- openNode.availableCurrencies()
+    } yield
+      assert(
+        availableCurrenciesData.isLeft && availableCurrenciesData.left.get.isInstanceOf[AvailableCurrenciesData]
+      )
+  }
 }

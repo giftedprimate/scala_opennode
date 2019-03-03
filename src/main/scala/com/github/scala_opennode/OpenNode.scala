@@ -32,7 +32,7 @@ class OpenNode(apiKey: String,
     case Some(openNodeError) => openNodeError
     case None =>
       logger.warn(s"[scala_opennode] $jsValue could not be parsed.")
-      OpenNodeError(success = false, message = "response from opennode is un-parsable")
+      OpenNodeError(success = false, message = s"response from opennode is un-parsable $jsValue")
   }
 
   val openNodeUrl = "https://dev-api.opennode.co/v1/"
@@ -179,12 +179,38 @@ class OpenNode(apiKey: String,
    * GET https://dev-api.opennode.co/v1/rates
    * todo -> implement if needed
    */
-  //  def currentExchangeRates() = ???
+  def currentExchangeRates(): Future[Either[CurrentExchangeRatesData, OpenNodeError]] = {
+    for {
+      response <- http
+        .url(s"$openNodeUrl/rates")
+        .addHttpHeaders("Content-type" -> contentType, "Authorization" -> apiKey)
+        .get()
+    } yield {
+      val parsedJson = Json.parse(response.body)
+      parsedJson.validate[CurrentExchangeRatesData].asOpt match {
+        case Some(currentExchangeRatesData) => Left(currentExchangeRatesData)
+        case None => Right(processError(parsedJson))
+      }
+    }
+  }
 
   /**
    * Available Currencies
    * GET https://dev-api.opennode.co/v1/currencies
    * todo -> implement if needed
    */
-  //  def availableCurrencies() = ???
+  def availableCurrencies(): Future[Either[AvailableCurrenciesData, OpenNodeError]] = {
+    for {
+      response <- http
+        .url(s"$openNodeUrl/currencies")
+        .addHttpHeaders("Content-type" -> contentType, "Authorization" -> apiKey)
+        .get()
+    } yield {
+      val parsedJson = Json.parse(response.body)
+      parsedJson.validate[AvailableCurrenciesData].asOpt match {
+        case Some(availableCurrenciesData) => Left(availableCurrenciesData)
+        case None => Right(processError(parsedJson))
+      }
+    }
+  }
 }
