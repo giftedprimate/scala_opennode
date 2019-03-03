@@ -177,7 +177,6 @@ class OpenNode(apiKey: String,
   /**
    * Current Exchange Rates
    * GET https://dev-api.opennode.co/v1/rates
-   * todo -> implement if needed
    */
   def currentExchangeRates(): Future[Either[CurrentExchangeRatesData, OpenNodeError]] = {
     for {
@@ -197,7 +196,6 @@ class OpenNode(apiKey: String,
   /**
    * Available Currencies
    * GET https://dev-api.opennode.co/v1/currencies
-   * todo -> implement if needed
    */
   def availableCurrencies(): Future[Either[AvailableCurrenciesData, OpenNodeError]] = {
     for {
