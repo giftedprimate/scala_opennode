@@ -4,7 +4,7 @@ A library for utilizing [OpenNode](https://opennode.co)'s amazing api.
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.giftedprimate/scala_opennode_2.12/badge.svg?style=plastic)](https://maven-badges.herokuapp.com/com.github.giftedprimate/scala_opennode_2.12/rsql-parser)
 
-##Installation
+## Installation
 
 Add the following to your `build.sbt`
 
@@ -12,7 +12,7 @@ Add the following to your `build.sbt`
 libraryDependencies += "com.github.giftedprimate" % "scala_opennode_2.12" % "0.1"
 ```
 
-##Usage
+## Usage
 
 ```scala
 import com.github.scala_opennode.OpenNode
