@@ -1,6 +1,4 @@
-organization := "com.github.scala_opennode"
-
-sonatypeProfileName := "com.github.scala_opennode"
+organization := "com.github.giftedprimate"
 
 name := "scala_opennode"
 
@@ -20,6 +18,9 @@ developers := List(
 )
 licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 publishMavenStyle := true
+
+publishConfiguration := publishConfiguration.value.withOverwrite(true)
+publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true)
 
 publishTo := Some(
   if (isSnapshot.value)
