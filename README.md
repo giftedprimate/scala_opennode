@@ -119,3 +119,38 @@ object Example extends App {
 - [ ] Use [Ngrok](https://ngrok.com) to create a tunnel for OpenNode to call during development
 - [ ] Create a config option that can read from the environment for OpenNode class params
 - [ ] Convert all `Int` types to `Long`
+- [ ] Extend test coverage to handle Lightning transaction (Lightning works fine, this is just referring to testing)
+
+## Development
+
+### Prerequisites
+  - Java -v 1.8
+    - [Java](https://java.com/en/download/)
+  - Scala -v 2.12.2
+    - [Scala](https://www.scala-lang.org/download/)
+  - Lightning(testnet) full node locally
+    - Optional - for unit testing
+    - [Setup Instructions](https://andrewgriffithsonline.com/blog/180330-how-to-setup-a-lightning-node/)
+    
+### Api Keys Needed
+ - [OpenNode(dev)](https://dev.opennode.co)
+
+### Tests
+In order to run unit tests you must have a lightning/bitcoin(testnet) running locally as well as a OpenNode account. 
+Before running tests be sure to fund your wallet locally with at least $100 worth of tBTC.
+
+```
+>  sbt test
+```
+
+#### OpenNodeSpec
+Currently this spec will create a charge then fund the charge then immediately withdrawal the funds back into your
+local wallet. The test is only for `chain` transactions, this is because there isn't an effective way to test LN
+without a consistent node running, this will be implemented later. 
+
+### Run App
+
+```
+> sbt run
+```
+
