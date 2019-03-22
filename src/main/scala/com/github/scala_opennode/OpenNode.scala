@@ -54,7 +54,7 @@ class OpenNode(apiKey: String,
         amount = amount,
         order_id = orderId,
         success_url = successUrl,
-        callback_url = callbackUrl.map(cb => s"$cb/$orderId"),
+        callback_url = callbackUrl,
         customer_email = customerEmail,
         customer_name = customerName,
         auto_settle = autoSettle
