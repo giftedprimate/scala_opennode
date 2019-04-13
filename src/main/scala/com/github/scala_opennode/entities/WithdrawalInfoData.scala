@@ -19,12 +19,12 @@ object WithdrawalInfoData {
  */
 case class WithdrawalInfoData(
     id: String,
-    amount: Option[Int],
+    amount: Option[Long],
     `type`: Option[String],
     reference: Option[String],
-    processed_at: Option[Int],
+    processed_at: Option[Long],
     status: Option[String],
     address: Option[String],
-    fee: Option[Int],
+    fee: Option[Long],
     fiat_value: Option[Double]
 )

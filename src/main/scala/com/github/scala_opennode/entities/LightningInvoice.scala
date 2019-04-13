@@ -12,7 +12,7 @@ object LightningInvoice {
  *
  */
 case class LightningInvoice(
-    expires_at: Option[Int], // charge
+    expires_at: Option[Long], // charge
     payreq: String, // charge charges
-    settled_at: Option[Int] // charges
+    settled_at: Option[Long] // charges
 )

@@ -119,7 +119,7 @@ class OpenNode(apiKey: String,
    * No minimum for LN
    */
   def initiateWithdrawal(`type`: String,
-                         amount: Int,
+                         amount: Long,
                          address: String): Future[Either[WithdrawalResponseData, OpenNodeError]] = {
     val body = WithdrawalRequest(`type`, amount, address, callbackUrl)
     for {

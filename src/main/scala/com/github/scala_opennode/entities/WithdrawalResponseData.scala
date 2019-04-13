@@ -17,9 +17,9 @@ object WithdrawalResponseData {
 case class WithdrawalResponseData(
     id: String,
     `type`: String,
-    amount: Int,
+    amount: Long,
     reference: String,
-    processed_at: Int,
+    processed_at: Long,
     address: String,
-    fee: Int
+    fee: Long
 )
