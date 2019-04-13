@@ -10,8 +10,8 @@ import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.JsonBodyWritables._
 import play.api.libs.ws.ahc._
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class OpenNode(apiKey: String,
                successUrl: Option[String] = None,
@@ -26,7 +26,19 @@ class OpenNode(apiKey: String,
   }
   implicit val materializer: ActorMaterializer = ActorMaterializer()
 
-  val http = StandaloneAhcWSClient()
+  val openNodeUrl = "https://dev-api.opennode.co"
+
+  private def http(endPoint: String, method: String, jsonBody: Option[JsValue] = None) = {
+    val base = StandaloneAhcWSClient()
+      .url(openNodeUrl + endPoint)
+      .addHttpHeaders("Content-Type" -> contentType, "Authorization" -> apiKey)
+    method match {
+      case "post" =>
+        if (jsonBody.isEmpty) throw new Exception("jsonBody required for post requests")
+        else base.post(jsonBody.get)
+      case "get" => base.get()
+    }
+  }
 
   private def processError(jsValue: JsValue): OpenNodeError = jsValue.validate[OpenNodeError].asOpt match {
     case Some(openNodeError) => openNodeError
@@ -34,8 +46,6 @@ class OpenNode(apiKey: String,
       logger.warn(s"[scala_opennode] $jsValue could not be parsed.")
       OpenNodeError(success = false, message = s"response from opennode is un-parsable $jsValue")
   }
-
-  val openNodeUrl = "https://dev-api.opennode.co"
 
   /**
    * Generate a Charge
@@ -60,10 +70,7 @@ class OpenNode(apiKey: String,
         auto_settle = autoSettle
       )
     for {
-      response <- http
-        .url(s"$openNodeUrl/v1/charges")
-        .addHttpHeaders("Content-Type" -> contentType, "Authorization" -> apiKey)
-        .post(Json.toJson(body))
+      response <- http("/v1/charges", "post", Some(Json.toJson(body)))
     } yield {
       val parsedJson = Json.parse(response.body)
       parsedJson.validate[ChargeResponse].asOpt match {
@@ -80,10 +87,7 @@ class OpenNode(apiKey: String,
    */
   def getCharges(): Future[Either[List[ChargeInfoData], OpenNodeError]] = {
     for {
-      response <- http
-        .url(s"$openNodeUrl/v1/charges")
-        .addHttpHeaders("Content-type" -> contentType, "Authorization" -> apiKey)
-        .get()
+      response <- http("/v1/charges", "get")
     } yield {
       val parsedJson = Json.parse(response.body)
       parsedJson.validate[ChargesInfoResponse].asOpt match {
@@ -99,10 +103,7 @@ class OpenNode(apiKey: String,
    */
   def getCharge(id: String): Future[Either[ChargeInfoData, OpenNodeError]] = {
     for {
-      response <- http
-        .url(s"$openNodeUrl/v1/charge/$id")
-        .addHttpHeaders("Content-type" -> contentType, "Authorization" -> apiKey)
-        .get()
+      response <- http(s"/v1/charge/$id", "get")
     } yield {
       val parsedJson = Json.parse(response.body)
       parsedJson.validate[ChargeInfoResponse].asOpt match {
@@ -123,10 +124,7 @@ class OpenNode(apiKey: String,
                          address: String): Future[Either[WithdrawalResponseData, OpenNodeError]] = {
     val body = WithdrawalRequest(`type`, amount, address, callbackUrl)
     for {
-      response <- http
-        .url(s"$openNodeUrl/v2/withdrawals")
-        .addHttpHeaders("Content-type" -> contentType, "Authorization" -> apiKey)
-        .post(Json.toJson(body))
+      response <- http("/v2/withdrawals", "post", Some(Json.toJson(body)))
     } yield {
       val parsedJson = Json.parse(response.body)
       parsedJson.validate[WithdrawalResponse].asOpt match {
@@ -142,10 +140,7 @@ class OpenNode(apiKey: String,
    */
   def getAllWithdrawals(): Future[Either[List[WithdrawalInfoData], OpenNodeError]] = {
     for {
-      response <- http
-        .url(s"$openNodeUrl/v1/withdrawals")
-        .addHttpHeaders("Content-type" -> contentType, "Authorization" -> apiKey)
-        .get()
+      response <- http("/v1/withdrawals", "get")
     } yield {
       val parsedJson = Json.parse(response.body)
       parsedJson.validate[WithdrawalsInfoResponse].asOpt match {
@@ -161,10 +156,7 @@ class OpenNode(apiKey: String,
    */
   def withdrawalInfo(id: String): Future[Either[WithdrawalInfoData, OpenNodeError]] = {
     for {
-      response <- http
-        .url(s"$openNodeUrl/v1/withdrawal/$id")
-        .addHttpHeaders("Content-type" -> contentType, "Authorization" -> apiKey)
-        .get()
+      response <- http(s"/v1/withdrawal/$id", "get")
     } yield {
       val parsedJson = Json.parse(response.body)
       parsedJson.validate[WithdrawalInfoResponse].asOpt match {
@@ -180,10 +172,7 @@ class OpenNode(apiKey: String,
    */
   def currentExchangeRates(): Future[Either[CurrentExchangeRatesData, OpenNodeError]] = {
     for {
-      response <- http
-        .url(s"$openNodeUrl/v1/rates")
-        .addHttpHeaders("Content-type" -> contentType, "Authorization" -> apiKey)
-        .get()
+      response <- http("/v1/rates", "get")
     } yield {
       val parsedJson = Json.parse(response.body)
       parsedJson.validate[CurrentExchangeRatesData].asOpt match {
@@ -199,10 +188,7 @@ class OpenNode(apiKey: String,
    */
   def availableCurrencies(): Future[Either[AvailableCurrenciesData, OpenNodeError]] = {
     for {
-      response <- http
-        .url(s"$openNodeUrl/v1/currencies")
-        .addHttpHeaders("Content-type" -> contentType, "Authorization" -> apiKey)
-        .get()
+      response <- http("/v1/currencies", "get")
     } yield {
       val parsedJson = Json.parse(response.body)
       parsedJson.validate[AvailableCurrenciesData].asOpt match {
@@ -218,10 +204,7 @@ class OpenNode(apiKey: String,
    */
   def accountBalance(): Future[Either[AccountBalanceData, OpenNodeError]] = {
     for {
-      response <- http
-        .url(s"$openNodeUrl/v1/account/balance")
-        .addHttpHeaders("Content-type" -> contentType, "Authorization" -> apiKey)
-        .get()
+      response <- http("/v1/account/balance", "get")
     } yield {
       val parsedJson = Json.parse(response.body)
       parsedJson.validate[AccountBalanceData].asOpt match {
