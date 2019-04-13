@@ -20,9 +20,10 @@ import com.github.scala_opennode.entities._
 
 object Example extends App {
     val openNode = new OpenNode(
-        apiKey = "your-opennode-api-key",  
-        successUrl = Some("https://placetoredirectto.com"),
-        callbackUrl = Some("https://yourcallbackforpaymentupdates.com")
+        apiKey = "your-opennode-api-key", // required  
+        successUrl = Some("https://placetoredirectto.com"), // optional
+        callbackUrl = Some("https://yourcallbackforpaymentupdates.com"), // optional
+        mode = "dev" // required <dev || normal>
     )
     
     /**
