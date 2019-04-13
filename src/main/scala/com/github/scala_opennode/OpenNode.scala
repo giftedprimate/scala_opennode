@@ -35,7 +35,7 @@ class OpenNode(apiKey: String,
       OpenNodeError(success = false, message = s"response from opennode is un-parsable $jsValue")
   }
 
-  val openNodeUrl = "https://dev-api.opennode.co/v1/"
+  val openNodeUrl = "https://dev-api.opennode.co"
 
   /**
    * Generate a Charge
@@ -61,7 +61,7 @@ class OpenNode(apiKey: String,
       )
     for {
       response <- http
-        .url(s"$openNodeUrl/charges")
+        .url(s"$openNodeUrl/v1/charges")
         .addHttpHeaders("Content-Type" -> contentType, "Authorization" -> apiKey)
         .post(Json.toJson(body))
     } yield {
@@ -81,7 +81,7 @@ class OpenNode(apiKey: String,
   def getCharges(): Future[Either[List[ChargeInfoData], OpenNodeError]] = {
     for {
       response <- http
-        .url(s"$openNodeUrl/charges")
+        .url(s"$openNodeUrl/v1/charges")
         .addHttpHeaders("Content-type" -> contentType, "Authorization" -> apiKey)
         .get()
     } yield {
@@ -100,7 +100,7 @@ class OpenNode(apiKey: String,
   def getCharge(id: String): Future[Either[ChargeInfoData, OpenNodeError]] = {
     for {
       response <- http
-        .url(s"$openNodeUrl/charge/$id")
+        .url(s"$openNodeUrl/v1/charge/$id")
         .addHttpHeaders("Content-type" -> contentType, "Authorization" -> apiKey)
         .get()
     } yield {
@@ -121,10 +121,10 @@ class OpenNode(apiKey: String,
   def initiateWithdrawal(`type`: String,
                          amount: Int,
                          address: String): Future[Either[WithdrawalResponseData, OpenNodeError]] = {
-    val body = WithdrawalRequest(`type`, amount, address)
+    val body = WithdrawalRequest(`type`, amount, address, callbackUrl)
     for {
       response <- http
-        .url(s"$openNodeUrl/withdrawals")
+        .url(s"$openNodeUrl/v2/withdrawals")
         .addHttpHeaders("Content-type" -> contentType, "Authorization" -> apiKey)
         .post(Json.toJson(body))
     } yield {
@@ -143,7 +143,7 @@ class OpenNode(apiKey: String,
   def getAllWithdrawals(): Future[Either[List[WithdrawalInfoData], OpenNodeError]] = {
     for {
       response <- http
-        .url(s"$openNodeUrl/withdrawals")
+        .url(s"$openNodeUrl/v1/withdrawals")
         .addHttpHeaders("Content-type" -> contentType, "Authorization" -> apiKey)
         .get()
     } yield {
@@ -162,7 +162,7 @@ class OpenNode(apiKey: String,
   def withdrawalInfo(id: String): Future[Either[WithdrawalInfoData, OpenNodeError]] = {
     for {
       response <- http
-        .url(s"$openNodeUrl/withdrawal/$id")
+        .url(s"$openNodeUrl/v1/withdrawal/$id")
         .addHttpHeaders("Content-type" -> contentType, "Authorization" -> apiKey)
         .get()
     } yield {
@@ -181,7 +181,7 @@ class OpenNode(apiKey: String,
   def currentExchangeRates(): Future[Either[CurrentExchangeRatesData, OpenNodeError]] = {
     for {
       response <- http
-        .url(s"$openNodeUrl/rates")
+        .url(s"$openNodeUrl/v1/rates")
         .addHttpHeaders("Content-type" -> contentType, "Authorization" -> apiKey)
         .get()
     } yield {
@@ -200,7 +200,7 @@ class OpenNode(apiKey: String,
   def availableCurrencies(): Future[Either[AvailableCurrenciesData, OpenNodeError]] = {
     for {
       response <- http
-        .url(s"$openNodeUrl/currencies")
+        .url(s"$openNodeUrl/v1/currencies")
         .addHttpHeaders("Content-type" -> contentType, "Authorization" -> apiKey)
         .get()
     } yield {

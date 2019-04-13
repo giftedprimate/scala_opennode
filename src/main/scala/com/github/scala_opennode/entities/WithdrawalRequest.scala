@@ -8,6 +8,7 @@ object WithdrawalRequest {
 
 case class WithdrawalRequest(
     `type`: String,
-    amount: Int,
-    address: String
+    amount: Long,
+    address: String,
+    callback_url: Option[String] = None
 )
