@@ -64,7 +64,7 @@ object Example extends App {
     
   /**
    * Initiate a Withdrawal
-   * POST https://dev-api.opennode.co/v1/withdrawals
+   * POST https://dev-api.opennode.co/v2/withdrawals
    * Minimum withdrawal for on-chain is $20
    * No minimum for LN
    */
