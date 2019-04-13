@@ -14,7 +14,7 @@ object OpenNodeSpec {
 
 class OpenNodeSpec extends AsyncFlatSpec with Logging {
   import OpenNodeSpec._
-  val openNode = new OpenNode(sys.env("mathbot_payments_openNode_apiKey"))
+  val openNode = new OpenNode(apiKey = sys.env("mathbot_payments_openNode_apiKey"), mode = "dev")
 
   object Transaction {
     implicit val transactionFormat: OFormat[Transaction] = Json.format[Transaction]

@@ -16,8 +16,10 @@ import scala.concurrent.Future
 class OpenNode(apiKey: String,
                successUrl: Option[String] = None,
                callbackUrl: Option[String] = None,
-               contentType: String = "application/json")
+               contentType: String = "application/json",
+               mode: String)
     extends Logging {
+  if (mode != "dev" && mode != "normal") throw new Exception("Mode must be set to either 'dev' of 'normal'")
   // Create Akka system for thread and streaming management
   implicit val system: ActorSystem = ActorSystem()
 
@@ -26,7 +28,10 @@ class OpenNode(apiKey: String,
   }
   implicit val materializer: ActorMaterializer = ActorMaterializer()
 
-  val openNodeUrl = "https://dev-api.opennode.co"
+  private val openNodeUrl = mode match {
+    case "dev" => "https://dev-api.opennode.co"
+    case "normal" => "https://api.opennode.co"
+  }
 
   private def http(endPoint: String, method: String, jsonBody: Option[JsValue] = None) = {
     val base = StandaloneAhcWSClient()
