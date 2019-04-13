@@ -211,4 +211,23 @@ class OpenNode(apiKey: String,
       }
     }
   }
+
+  /**
+   * Account balance
+   * GET https://api.opennode.co/v1/account/balance
+   */
+  def accountBalance(): Future[Either[AccountBalanceData, OpenNodeError]] = {
+    for {
+      response <- http
+        .url(s"$openNodeUrl/v1/account/balance")
+        .addHttpHeaders("Content-type" -> contentType, "Authorization" -> apiKey)
+        .get()
+    } yield {
+      val parsedJson = Json.parse(response.body)
+      parsedJson.validate[AccountBalanceData].asOpt match {
+        case Some(accountBalanceData) => Left(accountBalanceData)
+        case None => Right(processError(parsedJson))
+      }
+    }
+  }
 }

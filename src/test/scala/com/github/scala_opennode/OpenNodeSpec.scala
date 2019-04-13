@@ -140,4 +140,14 @@ class OpenNodeSpec extends AsyncFlatSpec with Logging {
         availableCurrenciesData.isLeft && availableCurrenciesData.left.get.isInstanceOf[AvailableCurrenciesData]
       )
   }
+
+  behavior of "accountBalance"
+  it should "respond with AccountBalanceData" in {
+    for {
+      accountBalanceData <- openNode.accountBalance()
+    } yield
+      assert(
+        accountBalanceData.isLeft && accountBalanceData.left.get.isInstanceOf[AccountBalanceData]
+      )
+  }
 }
