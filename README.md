@@ -9,7 +9,7 @@ A library for utilizing [OpenNode](https://opennode.co)'s amazing api.
 Add the following to your `build.sbt`
 
 ```scala
-libraryDependencies += "com.github.giftedprimate" % "scala_opennode_2.12" % "0.1"
+libraryDependencies += "com.github.giftedprimate" % "scala_opennode_2.12" % "<current version>"
 ```
 
 ## Usage
@@ -112,13 +112,22 @@ object Example extends App {
        case Left(availableCurrenciesData) => availableCurrenciesData // success
        case Right(openNodeError) => openNodeError // error
     }
+    
+  /**
+   * Account balance
+   * GET https://api.opennode.co/v1/account/balance
+   */
+   openNode.accountBalance() map {
+    case Left(accountBalanceData) => accountBalanceData // success
+    case Right(openNodeError) => openNodeError // error
+   }
 }
 ```
 
 ## Todos
 - [ ] Use [Ngrok](https://ngrok.com) to create a tunnel for OpenNode to call during development
 - [ ] Create a config option that can read from the environment for OpenNode class params
-- [ ] Convert all `Int` types to `Long`
+- [x] Convert all `Int` types to `Long`
 - [ ] Extend test coverage to handle Lightning transaction (Lightning works fine, this is just referring to testing)
 
 ## Development
