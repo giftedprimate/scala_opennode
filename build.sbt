@@ -4,7 +4,7 @@ name := "scala_opennode"
 
 version := "0.3"
 
-scalaVersion := "2.12.8"
+scalaVersion := "2.11.11"
 
 homepage := Some(url("https://github.com/giftedprimate/scala_opennode"))
 scmInfo := Some(ScmInfo(url("https://github.com/giftedprimate/scala_opennode"), "git@github.com:giftedprimate/scala_opennode.git"))
