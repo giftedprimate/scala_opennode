@@ -2,7 +2,7 @@ organization := "com.github.giftedprimate"
 
 name := "scala_opennode"
 
-version := "0.2"
+version := "0.3"
 
 scalaVersion := "2.12.8"
 
