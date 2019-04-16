@@ -5,11 +5,12 @@ A library for utilizing [OpenNode](https://opennode.co)'s amazing api.
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.giftedprimate/scala_opennode_2.12/badge.svg?style=plastic)](https://maven-badges.herokuapp.com/com.github.giftedprimate/scala_opennode_2.12/rsql-parser)
 
 ## Installation
+Support for scala versions 2.11 and 2.12. File an issue if you need a different version released.
 
 Add the following to your `build.sbt`
 
 ```scala
-libraryDependencies += "com.github.giftedprimate" % "scala_opennode_2.12" % "<current version>"
+libraryDependencies += "com.github.giftedprimate" %% "scala_opennode" % "<current version>"
 ```
 
 ## Usage
