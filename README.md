@@ -71,7 +71,7 @@ object Example extends App {
    */
    openNode.initiateWithdrawal(
        `type` = "ln", // 'ln' or 'chain'
-       amount = 10000,
+       amount = 10000L,
        address = "qwer;safo9y9yihfagh"
    ) map {
        case Left(withdrawalResponseData) => withdrawalResponseData // success
